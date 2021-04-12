@@ -7,46 +7,19 @@ import traceback
 
 s3client = boto3.client("s3")
 
-def version_1(event): 
-  content_type_header = event['headers']['content-type']
-  postdata = base64.b64decode(event['body']).decode('iso-8859-1')
-  lst = []
-  for part in decoder.MultipartDecoder(postdata.encode('utf-8'), content_type_header).parts:
-    lst.append(part.text)
-  response = s3client.put_object(Body=lst[0].encode('iso-8859-1'),  Bucket='rahul-project-bucket',    Key='mypicturefinal.jpeg')
+
+def upload_to_s3(lst, name):
+  response = s3client.put_object(Body=lst[0].encode('iso-8859-1'),Bucket='rahul-project-bucket', Key=name)
   print(response)
-
-
-def version_2(event):
-  # fileName = "random.jpeg"
-  bodyData = event['body']
-  decodedFile = base64.b64decode(bodyData).decode('iso-8859-1')
-  # print(decodedFile.headers)
-  lst = []
-  for part in decoder.MultipartDecoder(decodedFile, event['headers']['content-type']).parts:
-    lst.append(part.text)
-  response = s3client.put_object(Body=lst[0].encode('iso-8859-1'),  Bucket='rahul-project-bucket',    Key='mypicturefinal.jpeg')
-  print(response)
-  # s3client.put_object(Bucket='rahul-project-bucket', Key=fileName, Body=decodedFile.content)
-
 
 def version_4(event): 
   content_type_header = event['headers']['content-type']
   postdata = base64.b64decode(event['body']).decode('iso-8859-1')
   lst = []
   for part in decoder.MultipartDecoder(postdata.encode('utf-8'), content_type_header).parts:
-      lst.append(part.text)
-  response = s3client.put_object(Body=lst[0].encode('iso-8859-1'),Bucket='rahul-project-bucket', Key='mypicturefinal.jpg')
-  print(response)
-
-def version_3(event): 
-  from cgi import parse_header, parse_multipart
-  from io import BytesIO
-  form_data = parse_multipart(BytesIO(event['body'].decode('base64')))
-  uploaded_file = form_data.files['file']
-  print(uploaded_file)
-  filename = uploaded_file.filename
-  print(filename)
+    lst.append(part.text)
+  upload_to_s3(lst, "image.jpeg")
+  
 
 def handler(event, context):
   print(event)
