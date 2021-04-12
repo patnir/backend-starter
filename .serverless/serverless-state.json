@@ -9,6 +9,15 @@
       "variableSyntax": "\\${([^{}]+?)}",
       "name": "aws",
       "runtime": "python3.8",
+      "iamRoleStatements": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:*"
+          ],
+          "Resource": "arn:aws:s3:::*"
+        }
+      ],
       "region": "us-east-1",
       "versionFunctions": true,
       "remoteFunctionData": null,
@@ -132,6 +141,9 @@
                             "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/backend-starter-dev*:*:*"
                           }
                         ]
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][0]"
                       }
                     ]
                   }
@@ -160,7 +172,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/backend-starter/dev/1618093215491-2021-04-10T22:20:15.491Z/backend-starter.zip"
+                "S3Key": "serverless/backend-starter/dev/1618187250842-2021-04-12T00:27:30.842Z/backend-starter.zip"
               },
               "FunctionName": "backend-starter-dev-upload_file",
               "Handler": "upload_file.handler",
@@ -178,14 +190,14 @@
               "UploadUnderscorefileLogGroup"
             ]
           },
-          "UploadUnderscorefileLambdaVersionNwcFyPOOrd6dJWA7Ww7sE8XGuXjCvqHHes1WneFXZU": {
+          "UploadUnderscorefileLambdaVersionMt7AEgqyq5UBnYjuxZmf7ZJ5zvorEUVrxu0mkegI": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UploadUnderscorefileLambdaFunction"
               },
-              "CodeSha256": "fS/31i2Y3iayLb0vgsszpbrUAKmSj83Hevw+KQ4jH/0="
+              "CodeSha256": "0IZROBNU2DphL4ORIT+K8kX0UPRjjL44QIuioJPjDCA="
             }
           },
           "ApiGatewayRestApi": {
@@ -303,7 +315,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1618093203270": {
+          "ApiGatewayDeployment1618187236639": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -363,7 +375,7 @@
           "UploadUnderscorefileLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UploadUnderscorefileLambdaVersionNwcFyPOOrd6dJWA7Ww7sE8XGuXjCvqHHes1WneFXZU"
+              "Ref": "UploadUnderscorefileLambdaVersionMt7AEgqyq5UBnYjuxZmf7ZJ5zvorEUVrxu0mkegI"
             }
           },
           "ServiceEndpoint": {
@@ -462,7 +474,8 @@
     },
     "custom": {
       "pythonRequirements": {
-        "dockerizePip": false
+        "dockerizePip": false,
+        "slim": true
       }
     },
     "plugins": [
@@ -506,7 +519,7 @@
         "timeout": 6,
         "runtime": "python3.8",
         "vpc": {},
-        "versionLogicalId": "UploadUnderscorefileLambdaVersionNwcFyPOOrd6dJWA7Ww7sE8XGuXjCvqHHes1WneFXZU"
+        "versionLogicalId": "UploadUnderscorefileLambdaVersionMt7AEgqyq5UBnYjuxZmf7ZJ5zvorEUVrxu0mkegI"
       }
     },
     "serviceFilename": "serverless.yml",
@@ -515,7 +528,7 @@
     "artifact": "/Users/test/Projects/backend-starter/.serverless/backend-starter.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/backend-starter/dev/1618093215491-2021-04-10T22:20:15.491Z",
+    "artifactDirectoryName": "serverless/backend-starter/dev/1618187250842-2021-04-12T00:27:30.842Z",
     "artifact": "backend-starter.zip"
   }
 }
